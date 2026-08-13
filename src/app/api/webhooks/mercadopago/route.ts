@@ -4,14 +4,12 @@ import { findOrderByExternalRef, findOrderByMpPaymentId, updateOrder } from "@/l
 
 function verifyWebhookSignature(req: Request): boolean {
   const secret = process.env.MERCADOPAGO_WEBHOOK_SECRET;
-  if (!secret) return true;
+  if (!secret) return process.env.NODE_ENV !== "production";
 
   const signature = req.headers.get("x-signature");
-  const requestId = req.headers.get("x-request-id");
-  if (!signature || !requestId) return false;
+  if (!signature) return false;
 
-  // Validação simplificada — em produção use o manifest completo da documentação MP
-  return signature.includes(secret) || requestId.length > 0;
+  return signature.includes(secret);
 }
 
 export async function POST(req: Request) {

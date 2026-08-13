@@ -6,7 +6,7 @@ export async function GET() {
     const store = await getStore();
     return NextResponse.json(store);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erro ao carregar dados";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[admin/store]", err);
+    return NextResponse.json({ error: "Erro ao carregar dados" }, { status: 500 });
   }
 }

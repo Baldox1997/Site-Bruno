@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -48,11 +49,6 @@ next-env.d.ts
 /smart-pc-manager/node_modules/
 /smart-pc-manager/dist/
 /smart-pc-manager/src-tauri/target/
-
-.vercel
-
-.vercel
-.env*
 
 # Local app binaries
 /Aplicativos/CampoMinadoBot/

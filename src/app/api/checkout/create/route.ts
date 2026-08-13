@@ -115,8 +115,13 @@ export async function POST(req: Request) {
       redirectUrl: preference.init_point,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erro ao criar pagamento";
-    console.error("[checkout/create]", message);
+    console.error("[checkout/create]", err);
+    const message =
+      process.env.NODE_ENV === "production"
+        ? "Erro ao criar pagamento"
+        : err instanceof Error
+          ? err.message
+          : "Erro ao criar pagamento";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

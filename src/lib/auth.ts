@@ -8,7 +8,13 @@ const COOKIE = "bz_session";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 function secretKey() {
-  const secret = process.env.AUTH_SECRET ?? "dev-only-insecure-secret-min-32-chars!!";
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("AUTH_SECRET não configurado");
+    }
+    return new TextEncoder().encode("dev-only-insecure-secret-min-32-chars!!");
+  }
   return new TextEncoder().encode(secret);
 }
 
